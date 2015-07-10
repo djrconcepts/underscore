@@ -262,8 +262,8 @@
 
     equal(options.a, 1, 'should not error on `null` or `undefined` sources');
 
-    strictEqual(_.defaults(null, {a: 1}), null, 'result is null if destination is null');
-    strictEqual(_.defaults(void 0, {a: 1}), void 0, 'result is undefined if destination is undefined');
+    deepEqual(_.defaults(null, {a: 1}), {a: 1}, '_defaults skips null or undefined arguments');
+    deepEqual(_.defaults(void 0, {a: 1}), {a: 1}, '_defaults skips null or undefined arguments');
   });
 
   test('clone', function() {

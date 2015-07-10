@@ -1008,9 +1008,17 @@
   };
 
   // An internal function for creating assigner functions.
-  var createAssigner = function(keysFunc, undefinedOnly) {
+  var createAssigner = function(keysFunc, defaults) {
     return function(obj) {
       var length = arguments.length;
+
+      if ( defaults ) {
+        if ( obj == undefined || obj == null ) {
+          console.log('undefined or null');
+          obj = {};
+        }
+      }
+
       if (length < 2 || obj == null) return obj;
       for (var index = 1; index < length; index++) {
         var source = arguments[index],
@@ -1018,7 +1026,7 @@
             l = keys.length;
         for (var i = 0; i < l; i++) {
           var key = keys[i];
-          if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
+          if (!defaults || obj[key] === void 0) obj[key] = source[key];
         }
       }
       return obj;
@@ -1084,6 +1092,47 @@
 
   // Fill in a given object with default properties.
   _.defaults = createAssigner(_.allKeys, true);
+
+/*
+_.defaults = function( obj ) {
+
+    console.log('arguments',arguments);
+
+    if( obj == undefined || obj == null ){
+      console.log('undefined or null');
+      obj = {};
+    }
+
+    var length = arguments.length;
+
+    if (length < 2) return obj;
+
+    for (var index = 1; index < length; index++) {
+
+      var source = arguments[index],
+
+          //keys = keysFunc(source),
+          keys = _.allKeys(source),
+
+          l = keys.length;
+
+      for (var i = 0; i < l; i++) {
+
+        var key = keys[i];
+
+        if ( obj[key] === void 0) obj[key] = source[key];
+
+      }
+
+    }
+
+    return obj;
+
+};
+*/
+
+
+
 
   // Creates an object that inherits from the given prototype object.
   // If additional properties are provided then they will be added to the
