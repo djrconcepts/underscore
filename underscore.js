@@ -1011,11 +1011,7 @@
   var createAssigner = function(keysFunc, defaults) {
     return function(obj) {
       var length = arguments.length;
-      if ( defaults ) {
-        if ( obj == undefined || obj == null ) {
-          obj = {};
-        }
-      }
+      if (defaults && obj == null) obj = {};
       if (length < 2 || obj == null) return obj;
       for (var index = 1; index < length; index++) {
         var source = arguments[index],
